@@ -1,0 +1,27 @@
+2024-12-27 17:00:31,615 - INFO - 日誌文件位置: /Users/randy/github-repo/freshservice-automation/adata_fs_automation_logs/ticket_update_20241227_170031.log
+2024-12-27 17:00:31,615 - INFO - 開始執行程式
+2024-12-27 17:00:31,615 - INFO - 開始處理，總計 10 個 tickets
+2024-12-27 17:00:31,615 - INFO - 第一個Ticket ID: 6591
+2024-12-27 17:00:31,615 - INFO - 最後一個Ticket ID: 6600
+2024-12-27 17:00:31,615 - INFO - 處理進度: 1/10 (10.00%)
+2024-12-27 17:00:32,806 - ERROR - 更新 Ticket 6591 時發生錯誤: 400 Client Error: Bad Request for url: https://adata820.freshservice.com/api/v2/tickets/6591
+2024-12-27 17:00:37,812 - INFO - 處理進度: 2/10 (20.00%)
+2024-12-27 17:00:38,215 - ERROR - 更新 Ticket 6592 時發生錯誤: 400 Client Error: Bad Request for url: https://adata820.freshservice.com/api/v2/tickets/6592
+2024-12-27 17:00:43,220 - INFO - 處理進度: 3/10 (30.00%)
+2024-12-27 17:00:44,384 - INFO - 成功更新 Ticket 6593
+2024-12-27 17:00:49,389 - INFO - 處理進度: 4/10 (40.00%)
+2024-12-27 17:00:49,750 - ERROR - 更新 Ticket 6594 時發生錯誤: 400 Client Error: Bad Request for url: https://adata820.freshservice.com/api/v2/tickets/6594
+2024-12-27 17:00:54,756 - INFO - 處理進度: 5/10 (50.00%)
+2024-12-27 17:00:55,095 - ERROR - 更新 Ticket 6595 時發生錯誤: 400 Client Error: Bad Request for url: https://adata820.freshservice.com/api/v2/tickets/6595
+2024-12-27 17:01:00,099 - INFO - 處理進度: 6/10 (60.00%)
+2024-12-27 17:01:00,445 - ERROR - 更新 Ticket 6596 時發生錯誤: 400 Client Error: Bad Request for url: https://adata820.freshservice.com/api/v2/tickets/6596
+2024-12-27 17:01:05,451 - INFO - 處理進度: 7/10 (70.00%)
+2024-12-27 17:01:05,794 - ERROR - 更新 Ticket 6597 時發生錯誤: 400 Client Error: Bad Request for url: https://adata820.freshservice.com/api/v2/tickets/6597
+2024-12-27 17:01:10,800 - INFO - 處理進度: 8/10 (80.00%)
+2024-12-27 17:01:11,109 - ERROR - 更新 Ticket 6598 時發生錯誤: 400 Client Error: Bad Request for url: https://adata820.freshservice.com/api/v2/tickets/6598
+2024-12-27 17:01:16,114 - INFO - 處理進度: 9/10 (90.00%)
+2024-12-27 17:01:16,555 - ERROR - 更新 Ticket 6599 時發生錯誤: 400 Client Error: Bad Request for url: https://adata820.freshservice.com/api/v2/tickets/6599
+2024-12-27 17:01:21,559 - INFO - 處理進度: 10/10 (100.00%)
+2024-12-27 17:01:22,215 - INFO - 成功更新 Ticket 6600
+2024-12-27 17:01:22,216 - ERROR - 找不到CSV文件: /Users/randy/github-repo/freshservice-automation/adata_ticket_id_test.csv
+2024-12-27 17:01:22,216 - INFO - 程式執行完成，日誌文件位置: adata_fs_automation_logs/ticket_update_20241227_170031.log
