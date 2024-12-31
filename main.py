@@ -3,8 +3,22 @@ import requests
 import time
 import logging
 import os
+import json
 from requests.auth import HTTPBasicAuth
 from datetime import datetime
+
+def load_config():
+    try:
+        with open('config.json', 'r') as file:
+            config = json.load(file)
+        logging.info("成功載入配置文件")
+        return config
+    except FileNotFoundError:
+        raise FileNotFoundError("找不到 config.json 文件")
+    except json.JSONDecodeError:
+        raise ValueError("config.json 格式錯誤，請檢查 JSON 格式")
+    except Exception as e:
+        raise Exception(f"載入配置文件時發生錯誤: {str(e)}")
 
 def setup_logging():
     """設置日誌記錄"""
@@ -30,7 +44,7 @@ def setup_logging():
             logging.StreamHandler()
         ]
     )
-    
+
     logging.info(f"日誌文件位置: {os.path.abspath(log_filename)}")
     return log_filename
 
@@ -45,34 +59,39 @@ class TicketUpdater:
         self.error_tickets = []  # 記錄失敗的ticket ID
 
     def update_ticket(self, ticket_id):
-        """更新單個ticket的函數"""
-        url = f"{self.base_url}/{ticket_id}/?bypass_mandatory=true"
-        payload = {
-            "custom_fields": {
-                "trigger_mc_workflow_to_update_dxdb_via_api": True
-            }
-        }
-
+        check_url = f"{self.base_url}/{ticket_id}"
+        
         try:
-            response = self.session.put(url, json=payload)
-            response.raise_for_status() #檢查 HTTP 響應的狀態碼
-            self.success_count += 1
-            logging.info(f"成功更新 Ticket {ticket_id}")
-            return True
+            check_response = self.session.get(check_url)
+            check_response.raise_for_status()
+            ticket_data = check_response.json()
+        
+            # 取得send_to_dxdb_statuscode欄位
+            status_code = ticket_data.get('ticket', {}).get('custom_fields', {}).get('send_to_dxdb_statuscode')
+            
+            # 如果狀態碼是 200，則跳過此 ticket。當執行到 return True 時，函數立即結束。
+            if status_code == 200:
+                logging.info(f"Ticket {ticket_id} 的 send_to_dxdb_statuscode 已是 200，跳過更新")
+                return True 
+            else:
+                #更新單個ticket的函數
+                url = f"{self.base_url}/{ticket_id}/?bypass_mandatory=true"
+                payload = {
+                    "custom_fields": {
+                        "trigger_mc_workflow_to_update_dxdb_via_api": True
+                    }
+                }
+
+                response = self.session.put(url, json=payload)
+                response.raise_for_status() #檢查 HTTP 響應的狀態碼
+                self.success_count += 1
+                logging.info(f"成功更新 Ticket {ticket_id}")
+                return True
         except requests.exceptions.RequestException as e: # 捕獲所有可能的請求異常
             self.failure_count += 1
             self.error_tickets.append(ticket_id)  # 記錄失敗的ticket ID
             logging.error(f"更新 Ticket {ticket_id} 時發生錯誤: {str(e)}")
             return False
-
-    """
-    def wait_with_countdown(self, seconds):
-
-        for remaining in range(seconds, 0, -1):
-            print(f"\r等待下一個請求... {remaining} 秒", end='')
-            time.sleep(1)
-        print("\r", end='')  # 清除倒數行
-    """
 
     def process_csv(self, csv_file_path, delay=5):
         """處理CSV文件中的所有tickets"""
@@ -118,19 +137,23 @@ class TicketUpdater:
             logging.error(f"處理CSV時發生錯誤: {str(e)}")
 
 def main():
-    # 設置參數
-    USERNAME = "549io3Yhr0410nm4s9d4"
-    PASSWORD = "."  
-    BASE_URL = "https://adata820.freshservice.com/api/v2/tickets"
-    CSV_FILE = "/Users/randy/github-repo/freshservice-automation/adata_ticket_id_test.csv"  # 請更改為您的CSV文件路徑
-    
     try:
+        # 取得配置值
+        config = load_config()
+        credentials = config.get('credentials', {})
+        api = config.get('api', {})
+        csv = config.get('csv', {})   
+    
         # 設置日誌
         log_file = setup_logging()
         logging.info(f"開始執行程式")
         
-        updater = TicketUpdater(USERNAME, PASSWORD, BASE_URL)
-        updater.process_csv(CSV_FILE)
+        updater = TicketUpdater(
+            username=credentials['username'],
+            password=credentials['password'],
+            base_url=api['base_url']
+        )
+        updater.process_csv(csv_file_path=csv['file_path'])
         
         logging.info(f"程式執行完成，日誌文件位置: {log_file}")
     except Exception as e:

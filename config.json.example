@@ -1,0 +1,12 @@
+{
+    "credentials": {
+        "username": "USERNAME",
+        "password": "PASSWORD"
+    },
+    "api": {
+        "base_url": "BASE_URL"
+    },
+    "csv": {
+        "file_path": "CSV_FILE_PATH"
+    }
+}

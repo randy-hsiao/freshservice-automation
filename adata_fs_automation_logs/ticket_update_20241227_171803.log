@@ -1,8 +1,0 @@
-2024-12-27 17:18:03,238 - INFO - 日誌文件位置: /Users/randy/github-repo/freshservice-automation/adata_fs_automation_logs/ticket_update_20241227_171803.log
-2024-12-27 17:18:03,238 - INFO - 開始執行程式
-2024-12-27 17:18:03,239 - INFO - 開始處理，總計 10 個 tickets
-2024-12-27 17:18:03,239 - INFO - 第一個Ticket ID: 6591
-2024-12-27 17:18:03,239 - INFO - 最後一個Ticket ID: 6600
-2024-12-27 17:18:03,239 - INFO - 處理進度: 1/10 (10.00%)
-2024-12-27 17:18:03,239 - ERROR - 處理CSV時發生錯誤: name 'true' is not defined
-2024-12-27 17:18:03,239 - INFO - 程式執行完成，日誌文件位置: adata_fs_automation_logs/ticket_update_20241227_171803.log
