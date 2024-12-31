@@ -138,15 +138,15 @@ class TicketUpdater:
 
 def main():
     try:
+        # 設置日誌
+        log_file = setup_logging()
+        logging.info(f"開始執行程式")
+        
         # 取得配置值
         config = load_config()
         credentials = config.get('credentials', {})
         api = config.get('api', {})
         csv = config.get('csv', {})   
-    
-        # 設置日誌
-        log_file = setup_logging()
-        logging.info(f"開始執行程式")
         
         updater = TicketUpdater(
             username=credentials['username'],
